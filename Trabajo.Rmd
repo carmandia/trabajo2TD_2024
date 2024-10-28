@@ -1,0 +1,49 @@
+---
+title: "Trabajo"
+author: "Carlos Manzano Diaz"
+date: "2024-10-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Explicacion de como vamos a trabajar
+Vamos a decidir que corredor vamos a fichar entre los siguientres 4: Tadej Pogacar,
+Remco Evenepoel, Jonas Vingegaard y Primoz Roglic.
+Para decidir que corredor es mejor nos basaremos en los siguientes criterios:
+W/Kg (relacion vatios/kilos) que mueve el corredor en una etapa de alta montaña;
+edad, porque cuanto mas joven sea tendra mas margen de mejora y sobre todo estara mas lejano 
+a desmejorar; Dinero que ganan al año, es decir, su salario (si nos ahorramos dinero mejor);
+Puntos UCI ganados en el ultimo año, para elegir el que mas nos puede aportar no solo en 
+tema de victorias sino tambien en tema de Puntos.
+
+Asi pues tenemos 4 alternativas, los 4 corredores, y 4 criterios, que hemos explicado cuales
+son y porque los hemos seleccionado
+Ahora añadiremos los enlaces donde poder consultar datos sobre esos criterios, de donde
+sacaremos nuestros datos para el proyecto.
+
+En *https://www.brujulabike.com/ciclistas-mejor-pagados/* Podra encontrar la lista de los 10 ciclistas
+mejor pagados del mundo donde se encuentran estos 4.
+De tal forma tenemos: Pogacar que gana 8 millones,Roglic que gana 4.5, Vingegaard que gana 4 y
+Evenepoel que gana 2.8 millones.
+
+En *https://x.com/ammattipyoraily* esta cuenta de X encontrara datos de ciclistas en relacion
+a los W/Kg's que mueven y durante cuanto tiempo lo mueven. Asi pues, segun sus calculos
+estima que Pogacar tiene una relacion de 7.6 W/Kg, Roglic de 6.9 W/Kg, Vingegaard de 7.4 W/Kg
+y Evenepoel de 7.1 W/kg.
+
+En cuanto a edad lo consultamos directamente en Google y este nos da los datos, y nos
+muestra que Pogacar tiene 26 años, Roglic tiene 34 años, Vingegaard 27 y Evenepoel 24 años.
+
+En el tema de los Puntos UCI obtenidos por cada corredor en el ultimo año hemos acudidp a la pagina
+*https://www.procyclingstats.com/index.php* que a parte de estos datos puede encontrar una gran cantidad de informacion sobre ciclismo. Segun esta pagina en el ultimo año los ptos UCI obtenidos por estos corredores son: Pogacar con 4588 ptos UCI, Roglic con 1513, Vingegaard con 1702 y Evenepoel con 2889 ptos UCI 
+
+Para decidir que ciclista escogemos usaremos los metodos de decision multicriterio estudiados en la asignatura
+
+# Método AHP
+
+# Método Electre
+
+# Método Promethee
