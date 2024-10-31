@@ -1,0 +1,57 @@
+Version: 2.0
+Alternatives: &alternatives
+  Pogacar:
+  Roglic:
+  Vingegaard:
+  Evenepoel
+Goal:
+  name: Elegir mejor alternativa
+  preferences:
+    pairwise:
+      - [Sueldo, Wats, 1/7]
+      - [Sueldo, Edad, 1]
+      - [Sueldo, Puntos, 1/3]
+      - [Wats, Edad, 9]
+      - [Wats, Puntos, 3]
+      - [Edad, Puntos, 1/2]
+  children:
+    Sueldo:
+      preferences:
+        pairwise:
+          - [Pogacar, Roglic, 1/3]
+          - [Pogacar, Vingegaard, 1/4]
+          - [Pogacar, Evenepoel, 1/5]
+          - [Roglic, Vingegaard, 1/2]
+          - [Roglic, Evenepoel, 1/3]
+          - [Vingegaard, Evenepoel, 1/2]
+      children: *alternatives
+    Wats:
+      preferences:
+        pairwise:
+          - [Pogacar, Roglic, 8]
+          - [Pogacar, Vingegaard, 3]
+          - [Pogacar, Evenepoel, 6]
+          - [Roglic, Vingegaard, 1/6]
+          - [Roglic, Evenepoel, 1/3]
+          - [Vingegaard, Evenepoel, 4]
+      children: *alternatives
+    Edad:
+      preferences:
+        pairwise:
+          - [Pogacar, Roglic, 8]
+          - [Pogacar, Vingegaard, 2]
+          - [Pogacar, Evenepoel, 1/3]
+          - [Roglic, Vingegaard, 1/8]
+          - [Roglic, Evenepoel, 1/9]
+          - [Vingegaard, Evenepoel, 1/4]
+      children: *alternatives
+    Puntos:
+      preferences:
+        pairwise:
+          - [Pogacar, Roglic, 4]
+          - [Pogacar, Vingegaard, 4]
+          - [Pogacar, Evenepoel, 3]
+          - [Roglic, Vingegaard, 1]
+          - [Roglic, Evenepoel, 1/2]
+          - [Vingegaard, Evenepoel, 1/2]
+      children: *alternatives
