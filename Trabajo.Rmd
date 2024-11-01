@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
 ```
 
 # Explicacion de como vamos a trabajar
@@ -42,8 +42,134 @@ En el tema de los Puntos UCI obtenidos por cada corredor en el ultimo año hemos
 
 Para decidir que ciclista escogemos usaremos los metodos de decision multicriterio estudiados en la asignatura
 
+```{r,echo=FALSE,include=FALSE}
+source("teoriadecision_funciones_multicriterio.R")
+source("teoriadecision_funciones_multicriterio_diagram.R")
+source("teoriadecision_funciones_multicriterio_utiles.R")
+```
+
 # Método AHP
+
+## Con libreria AHP
+
+## Con funciones de clase
 
 # Método Electre
 
+Como siempre introduciremos los datos junto con los pesos de cada criterio. Para el método Electre podemos elegir que haya un valor según el cual si uno es muy malo con respecto al otro no se tenga en cuenta esa alternativa. Esto solo lo usaremos en el 2º criterio puesto que si un corredor tiene un valor de W/Kg's muy bajo directamente no nos va a interesar. Considerare 1 W/Kg esa diferencia que aceptare como máximo. De la misma forma otorgaremos mas peso a este criterio, por ejemplo 0.4 y el resto igual de importantes entre ellos. Exigiremos un nivel de concordancia
+minimo de 0.8 (queremos ser exigentes y elegir al mejor corredor)
+
+```{r}
+mat_decision_Electre = multicriterio.crea.matrizdecision(c(-8  , 7.6, -26, 4.588,
+                       -4.5, 6.9, -34, 1.513,
+                       -4  , 7.4, -27, 1.702,
+                       -2.8, 7.1, -24, 2.889),
+                                       numalternativas = 4,
+                                       numcriterios = 4)
+Sol_Electre_1=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios = c(0.2,0.4,0.2,0.2),
+                              nivel.concordancia.minimo.alpha = 0.8,
+                              no.se.compensan = c(Inf,1,Inf,Inf),
+                              que.alternativas = T)
+
+```
+
+```{r}
+Sol_Electre_1$relacion.dominante
+
+
+qgraph::qgraph(Sol_Electre_1$relacion.dominante)
+
+```
+Aqui tenemos el grafo con una ordenacion parcial de 
+las alternativas
+```{r}
+Sol_Electre_1$nucleo_aprox
+```
+ Este es el nucleo de nuestras alternativas. Luego sabemos que las dos mejores son a1 y a4. luego podemos decir que
+ las alternativas a2 y a3 son peores q estas dos (entre ellas no podemos ordenarlas). Para ver cual de las dos es mejor
+ reducire el nivel alpha hasta q tenga una sola alternativa
+```{r}
+Sol_Electre_2=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios = c(0.2,0.4,0.2,0.2),
+                              nivel.concordancia.minimo.alpha = 0.7,
+                              no.se.compensan = c(Inf,1,Inf,Inf),
+                              que.alternativas = T)
+Sol_Electre_2$nucleo_aprox
+```
+ Seguimos teniendo el mismo nucleo por lo que sigo reduciendo el alpha
+ 
+```{r}
+Sol_Electre_3=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios = c(0.2,0.4,0.2,0.2),
+                              nivel.concordancia.minimo.alpha = 0.6,
+                              no.se.compensan = c(Inf,1,Inf,Inf),
+                              que.alternativas = T)
+Sol_Electre_3$nucleo_aprox
+```
+ Ahora nuestro nucleo esta formado unicamente por la alternativa 1 luego podemos decir
+ que elegiriamos al corredor 1 (Pogacar).
+ 
+\newpage
+
 # Método Promethee
+En primer lugar introducimos los datos expuestos al comienzo
+```{r}
+(matdecision = multicriterio.crea.matrizdecision(
+vector_matporfilas = c(-8  , 7.6, -26, 4.588,
+                       -4.5, 6.9, -34, 1.513,
+                       -4  , 7.4, -27, 1.702,
+                       -2.8, 7.1, -24, 2.889),
+                        numalternativas = 4, 
+                        numcriterios = 4,
+                        v.nombresalt = paste0("A",1:4),
+                        v.nombrescri = paste0("C",1:4) 
+))
+```
+
+Como funcion de preferencia trabajare con la usual, y para este caso supongo que todos los criterios son igual de importantes
+```{r}
+tab.fpref01 = matrix(c(
+                        # func, qi, pi, si
+                        1, 0,0,0,
+                        1, 0,0,0,
+                        1, 0,0,0,
+                        1,0,0,0), 
+                       nrow = 4,
+                       ncol = 4,
+                       byrow = T)
+pesos.criterios01 = c(1/4,1/4,1/4,1/4) # uno por cada criterio y tienen que sumar 1
+```
+
+## Promethee II
+
+Utilizaremos directamente el metodo Promethee 2 que nos dara una ordenacion de los datos
+
+```{r}
+tab_Pmthe_ii=multicriterio.metodo.promethee_ii(tabdecs.X = matdecision,pesos.criterios = pesos.criterios01,tab.fpref = tab.fpref01)
+require("qgraph")
+tab_Pmthe_ii
+qgraph(tab_Pmthe_ii$tablarelacionsupera)
+
+```
+
+Aqui tenemos la tabla junto con el grafo de ordenacion pero para aclarar:
+```{r}
+order(tab_Pmthe_ii$vflujos.netos,decreasing = T)
+```
+Asi segun este criterio la mejor opcion es fichar a Evenepoel, luego a Pogacar, luego a vingegaard y la ultima opcion es Roglic.
+
+## Promethee Windows
+Voy a hacer lo mismo con Promethee Windows:
+
+```{r}
+tab_Pmthe_Windows=multicriterio.metodo.promethee_windows(matdecision = matdecision,tab.fpref = tab.fpref01,pesos.criterios = pesos.criterios01,fminmax = c("min","max","min","max"))
+tab_Pmthe_Windows_2=multicriterio.metodo.promethee_windows_kableExtra(tab_Pmthe_Windows)
+tab_Pmthe_Windows_2$tabEscenario
+```
+Aqui tenemos la tabla completa, y para sacar las conclusiones finales:
+```{r}
+##tab_Pmthe_Windows_2$tabAcciones
+rownames(tab_Pmthe_Windows$Acciones)
+```
+Asi tendriamos la misma ordenacion que hemos obtenido en el apartado anterior
+
+Como conclusion, segun este metodo elegiriamos a Evenepoel como ciclista a fichar
+para nuestro equipo
