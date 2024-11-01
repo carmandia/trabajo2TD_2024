@@ -3,7 +3,7 @@ Alternatives: &alternatives
   Pogacar:
   Roglic:
   Vingegaard:
-  Evenepoel
+  Evenepoel:
 Goal:
   name: Elegir mejor alternativa
   preferences:

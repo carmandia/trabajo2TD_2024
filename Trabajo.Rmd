@@ -52,7 +52,30 @@ source("teoriadecision_funciones_multicriterio_utiles.R")
 
 ## Con libreria AHP
 
+```{r,echo=FALSE}
+library(ahp)
+datos=Load("Datos_AHP.ahp")
+Calculate(datos)
+Visualize(datos)
+```
+Vamos a analizar los datos:
+```{r,echo=FALSE}
+AnalyzeTable(datos)
+```
+Segun este metodo obtenemos q los Wats es el criterio que mas peso buscamos dar.
+En cuanto a elegir a un corredor, la decision seria elegir a Pogacar como primera opcion, luego Vingegaard, Evenepoel y Roglic. Podemos ver que es notable la inconsistencia en los criterios de Wats y Edad.
+
+```{r,echo=FALSE}
+AnalyzeTable(datos,variable = "priority")
+```
+
+Aqui podemos observar que del criterio Watts/Kg el que mas puntuación recibe es Pogacar, y sigue la misma ordenacion que en los resultados globales, luego podemos decir que lo que han recibido de puntuacion de este criterio, como es el q mas peso tiene ha determinado que corredor debemos fichar.
+
+
 ## Con funciones de clase
+
+
+\newpage
 
 # Método Electre
 
