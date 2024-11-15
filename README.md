@@ -14,3 +14,6 @@ Luego estaría la resolución del problema por el método Electre, en el que vam
 nivel $\alpha$ hasta que tenemos un núcleo con una sola alternativa
 
 Para finalizar tenemos la resolución del problema con el metodo Promethee, realizado de varias formas, con las funciones vistas en clase, y con el Promethee Windows.
+
+En el repositorio encontrara también las tablas generadas por la librería ahp
+junto con el trabajo en formato PDF y HTML, ademas de las funciones de R que se han utilizado para la resolucion del trabajo
