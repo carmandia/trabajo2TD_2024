@@ -2,7 +2,12 @@
 title: "Trabajo"
 author: "Carlos Manzano Diaz"
 date: "2024-10-28"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -10,42 +15,56 @@ knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
 ```
 
 # Explicacion de como vamos a trabajar
-Vamos a decidir que corredor vamos a fichar entre los siguientres 4: Tadej Pogacar,
-Remco Evenepoel, Jonas Vingegaard y Primoz Roglic.
-Para decidir que corredor es mejor nos basaremos en los siguientes criterios:
-W/Kg (relacion vatios/kilos) que mueve el corredor en una etapa de alta montaña;
-edad, porque cuanto mas joven sea tendra mas margen de mejora y sobre todo estara mas lejano 
-a desmejorar; Dinero que ganan al año, es decir, su salario (si nos ahorramos dinero mejor);
-Puntos UCI ganados en el ultimo año, para elegir el que mas nos puede aportar no solo en 
-tema de victorias sino tambien en tema de Puntos.
 
-Asi pues tenemos 4 alternativas, los 4 corredores, y 4 criterios, que hemos explicado cuales
-son y porque los hemos seleccionado
-Ahora añadiremos los enlaces donde poder consultar datos sobre esos criterios, de donde
-sacaremos nuestros datos para el proyecto.
+Vamos a decidir que corredor vamos a fichar entre los siguientres 4:
+Tadej Pogacar, Remco Evenepoel, Jonas Vingegaard y Primoz Roglic. Para
+decidir que corredor es mejor nos basaremos en los siguientes criterios:
+W/Kg (relacion vatios/kilos) que mueve el corredor en una etapa de alta
+montaña; edad, porque cuanto mas joven sea tendra mas margen de mejora y
+sobre todo estara mas lejano a desmejorar; Dinero que ganan al año, es
+decir, su salario (si nos ahorramos dinero mejor); Puntos UCI ganados en
+el ultimo año, para elegir el que mas nos puede aportar no solo en tema
+de victorias sino tambien en tema de Puntos.
 
-En *https://www.brujulabike.com/ciclistas-mejor-pagados/* Podra encontrar la lista de los 10 ciclistas
-mejor pagados del mundo donde se encuentran estos 4.
-De tal forma tenemos: Pogacar que gana 8 millones,Roglic que gana 4.5, Vingegaard que gana 4 y
-Evenepoel que gana 2.8 millones.
+Asi pues tenemos 4 alternativas, los 4 corredores, y 4 criterios, que
+hemos explicado cuales son y porque los hemos seleccionado Ahora
+añadiremos los enlaces donde poder consultar datos sobre esos criterios,
+de donde sacaremos nuestros datos para el proyecto.
 
-En *https://x.com/ammattipyoraily* esta cuenta de X encontrara datos de ciclistas en relacion
-a los W/Kg's que mueven y durante cuanto tiempo lo mueven. Asi pues, segun sus calculos
-estima que Pogacar tiene una relacion de 7.6 W/Kg, Roglic de 6.9 W/Kg, Vingegaard de 7.4 W/Kg
-y Evenepoel de 7.1 W/kg.
+En
+[*https://www.brujulabike.com/ciclistas-mejor-pagados/*](https://www.brujulabike.com/ciclistas-mejor-pagados/){.uri}
+Podra encontrar la lista de los 10 ciclistas mejor pagados del mundo
+donde se encuentran estos 4. De tal forma tenemos: Pogacar que gana 8
+millones,Roglic que gana 4.5, Vingegaard que gana 4 y Evenepoel que gana
+2.8 millones.
 
-En cuanto a edad lo consultamos directamente en Google y este nos da los datos, y nos
-muestra que Pogacar tiene 26 años, Roglic tiene 34 años, Vingegaard 27 y Evenepoel 24 años.
+En
+[*https://x.com/ammattipyoraily*](https://x.com/ammattipyoraily){.uri}
+esta cuenta de X encontrara datos de ciclistas en relacion a los W/Kg's
+que mueven y durante cuanto tiempo lo mueven. Asi pues, segun sus
+calculos estima que Pogacar tiene una relacion de 7.6 W/Kg, Roglic de
+6.9 W/Kg, Vingegaard de 7.4 W/Kg y Evenepoel de 7.1 W/kg.
 
-En el tema de los Puntos UCI obtenidos por cada corredor en el ultimo año hemos acudidp a la pagina
-*https://www.procyclingstats.com/index.php* que a parte de estos datos puede encontrar una gran cantidad de informacion sobre ciclismo. Segun esta pagina en el ultimo año los ptos UCI obtenidos por estos corredores son: Pogacar con 4588 ptos UCI, Roglic con 1513, Vingegaard con 1702 y Evenepoel con 2889 ptos UCI 
+En cuanto a edad lo consultamos directamente en Google y este nos da los
+datos, y nos muestra que Pogacar tiene 26 años, Roglic tiene 34 años,
+Vingegaard 27 y Evenepoel 24 años.
 
-Para decidir que ciclista escogemos usaremos los metodos de decision multicriterio estudiados en la asignatura
+En el tema de los Puntos UCI obtenidos por cada corredor en el ultimo
+año hemos acudidp a la pagina
+[*https://www.procyclingstats.com/index.php*](https://www.procyclingstats.com/index.php){.uri}
+que a parte de estos datos puede encontrar una gran cantidad de
+informacion sobre ciclismo. Segun esta pagina en el ultimo año los ptos
+UCI obtenidos por estos corredores son: Pogacar con 4588 ptos UCI,
+Roglic con 1513, Vingegaard con 1702 y Evenepoel con 2889 ptos UCI
+
+Para decidir que ciclista escogemos usaremos los metodos de decision
+multicriterio estudiados en la asignatura
 
 ```{r,echo=FALSE,include=FALSE}
 source("teoriadecision_funciones_multicriterio.R")
 source("teoriadecision_funciones_multicriterio_diagram.R")
 source("teoriadecision_funciones_multicriterio_utiles.R")
+library(knitr)
 ```
 
 # Método AHP
@@ -59,21 +78,35 @@ Calculate(datos)
 Visualize(datos)
 print(datos, priority = function(x) x$parent$priority["Total", x$name])
 ```
-En la tabla de prioridades podemos ver en cada criterio su peso (entre todos los criterios suman 1). Y luego ya dentro de cada criterio tenemos el "porcentaje" que se leva cada ciclista de ese criterio. La suma de las prioridades de los ciclistas en cada criterio es 1 tambien.
+
+En la tabla de prioridades podemos ver en cada criterio su peso (entre
+todos los criterios suman 1). Y luego ya dentro de cada criterio tenemos
+el "porcentaje" que se leva cada ciclista de ese criterio. La suma de
+las prioridades de los ciclistas en cada criterio es 1 tambien.
 
 Vamos a analizar los datos:
-```{r,echo=FALSE}
-AnalyzeTable(datos)
-```
-Segun este metodo obtenemos q los Wats es el criterio que mas peso buscamos dar.
-En cuanto a elegir a un corredor, la decision seria elegir a Pogacar como primera opcion, luego Vingegaard, Evenepoel y Roglic. Podemos ver que es notable la inconsistencia en los criterios de Wats y Edad.
 
 ```{r,echo=FALSE}
-AnalyzeTable(datos,variable = "priority")
+#AnalyzeTable(datos)
+export_formattable(AnalyzeTable(datos),file="tabla_gen.png")
 ```
 
-Aqui podemos observar que del criterio Watts/Kg el que mas puntuación recibe es Pogacar, y sigue la misma ordenacion que en los resultados globales, luego podemos decir que lo que han recibido de puntuacion de este criterio, como es el q mas peso tiene ha determinado que corredor debemos fichar.
+Segun este metodo obtenemos q los Wats es el criterio que mas peso
+buscamos dar. En cuanto a elegir a un corredor, la decision seria elegir
+a Pogacar como primera opcion, luego Vingegaard, Evenepoel y Roglic.
+Podemos ver que es notable la inconsistencia en los criterios de Wats y
+Edad.
 
+```{r,echo=FALSE}
+
+export_formattable(AnalyzeTable(datos,variable = "priority"),file = "tabla_loc.png")
+```
+
+Aqui podemos observar que del criterio Watts/Kg el que mas puntuación
+recibe es Pogacar, y sigue la misma ordenacion que en los resultados
+globales, luego podemos decir que lo que han recibido de puntuacion de
+este criterio, como es el q mas peso tiene ha determinado que corredor
+debemos fichar.
 
 ## Con funciones de clase
 
@@ -125,8 +158,10 @@ multicriterio.metodoahp.diagrama(Xmat.criterios,Xmatriznivel2)
 
 
 ```
-Aqui podemos ver el diagrama que antes hemos sacado con el paquete ahp. Ahi podemos ver los pesos de cada criterio
-y el peso que se lleva cada corredor de cada criterio.
+
+Aqui podemos ver el diagrama que antes hemos sacado con el paquete ahp.
+Ahi podemos ver los pesos de cada criterio y el peso que se lleva cada
+corredor de cada criterio.
 
 ```{r,echo=FALSE}
 pesos.criterios = multicriterio.metodoAHP.variante3.basico(Xmat.criterios)
@@ -140,7 +175,12 @@ rbind(pesos.sueldo$valoraciones.ahp,pesos.wats_kg$valoraciones.ahp,
 pesos.edad$valoraciones.ahp,pesos.puntos$valoraciones.ahp))
 knitr::kable(tabla.pesosglobales.ahp*100,digits = 2)
 ```
-En Ponder.Criterios podemos ver el porcentaje que tiene cada criterio respecto al total. Luego si miramos por columnas, tenemos el porcentaje que recibe cada corredor en cada criterio. Y en la ultima columna tenemos el porcentaje que nos da la conclusion final: el corredor ideal seria Pogacar seguido de Vingegaard, Evenepoel y Roglic.
+
+En Ponder.Criterios podemos ver el porcentaje que tiene cada criterio
+respecto al total. Luego si miramos por columnas, tenemos el porcentaje
+que recibe cada corredor en cada criterio. Y en la ultima columna
+tenemos el porcentaje que nos da la conclusion final: el corredor ideal
+seria Pogacar seguido de Vingegaard, Evenepoel y Roglic.
 
 ```{r,echo=FALSE}
 vPn1 = tabla.pesosglobales.ahp[5,1:4]
@@ -151,14 +191,24 @@ mPondRamas[1:4,1:4] = mPondRamasb
 mPondRamas[5,5] = 1
 knitr::kable(mPondRamas*100,digits = 2)
 ```
-En esta tabla podemos ver los pesos de cada rama junto con la solucion final (misma conclusion que antes)
+
+En esta tabla podemos ver los pesos de cada rama junto con la solucion
+final (misma conclusion que antes)
 
 \newpage
 
 # Método Electre
 
-Como siempre introduciremos los datos junto con los pesos de cada criterio. Para el método Electre podemos elegir que haya un valor según el cual si uno es muy malo con respecto al otro no se tenga en cuenta esa alternativa. Esto solo lo usaremos en el 2º criterio puesto que si un corredor tiene un valor de W/Kg's muy bajo directamente no nos va a interesar. Considerare 1 W/Kg esa diferencia que aceptare como máximo. De la misma forma otorgaremos mas peso a este criterio, por ejemplo 0.4 y el resto igual de importantes entre ellos. Exigiremos un nivel de concordancia
-minimo de 0.8 (queremos ser exigentes y elegir al mejor corredor)
+Como siempre introduciremos los datos junto con los pesos de cada
+criterio. Para el método Electre podemos elegir que haya un valor según
+el cual si uno es muy malo con respecto al otro no se tenga en cuenta
+esa alternativa. Esto solo lo usaremos en el 2º criterio puesto que si
+un corredor tiene un valor de W/Kg's muy bajo directamente no nos va a
+interesar. Considerare 1 W/Kg esa diferencia que aceptare como máximo.
+De la misma forma otorgaremos mas peso a este criterio, por ejemplo 0.4
+y el resto igual de importantes entre ellos. Exigiremos un nivel de
+concordancia minimo de 0.8 (queremos ser exigentes y elegir al mejor
+corredor)
 
 ```{r}
 mat_decision_Electre = multicriterio.crea.matrizdecision(c(-8  , 7.6, -26, 4.588,
@@ -181,14 +231,19 @@ Sol_Electre_1$relacion.dominante
 qgraph::qgraph(Sol_Electre_1$relacion.dominante)
 
 ```
-Aqui tenemos el grafo con una ordenacion parcial de 
-las alternativas
+
+Aqui tenemos el grafo con una ordenacion parcial de las alternativas
+
 ```{r}
 Sol_Electre_1$nucleo_aprox
 ```
- Este es el nucleo de nuestras alternativas. Luego sabemos que las dos mejores son a1 y a4. luego podemos decir que
- las alternativas a2 y a3 son peores q estas dos (entre ellas no podemos ordenarlas). Para ver cual de las dos es mejor
- reducire el nivel alpha hasta q tenga una sola alternativa
+
+Este es el nucleo de nuestras alternativas. Luego sabemos que las dos
+mejores son a1 y a4. luego podemos decir que las alternativas a2 y a3
+son peores q estas dos (entre ellas no podemos ordenarlas). Para ver
+cual de las dos es mejor reducire el nivel alpha hasta q tenga una sola
+alternativa
+
 ```{r}
 Sol_Electre_2=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios = c(0.2,0.4,0.2,0.2),
                               nivel.concordancia.minimo.alpha = 0.7,
@@ -196,8 +251,9 @@ Sol_Electre_2=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios
                               que.alternativas = T)
 Sol_Electre_2$nucleo_aprox
 ```
- Seguimos teniendo el mismo nucleo por lo que sigo reduciendo el alpha
- 
+
+Seguimos teniendo el mismo nucleo por lo que sigo reduciendo el alpha
+
 ```{r}
 Sol_Electre_3=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios = c(0.2,0.4,0.2,0.2),
                               nivel.concordancia.minimo.alpha = 0.6,
@@ -205,13 +261,16 @@ Sol_Electre_3=multicriterio.metodoELECTRE_I(mat_decision_Electre,pesos.criterios
                               que.alternativas = T)
 Sol_Electre_3$nucleo_aprox
 ```
- Ahora nuestro nucleo esta formado unicamente por la alternativa 1 luego podemos decir
- que elegiriamos al corredor 1 (Pogacar).
- 
+
+Ahora nuestro nucleo esta formado unicamente por la alternativa 1 luego
+podemos decir que elegiriamos al corredor 1 (Pogacar).
+
 \newpage
 
 # Método Promethee
+
 En primer lugar introducimos los datos expuestos al comienzo
+
 ```{r}
 (matdecision = multicriterio.crea.matrizdecision(
 vector_matporfilas = c(-8  , 7.6, -26, 4.588,
@@ -225,7 +284,9 @@ vector_matporfilas = c(-8  , 7.6, -26, 4.588,
 ))
 ```
 
-Como funcion de preferencia trabajare con la usual, y para este caso supongo que todos los criterios son igual de importantes
+Como funcion de preferencia trabajare con la usual, y para este caso
+supongo que todos los criterios son igual de importantes
+
 ```{r}
 tab.fpref01 = matrix(c(
                         # func, qi, pi, si
@@ -241,7 +302,8 @@ pesos.criterios01 = c(1/4,1/4,1/4,1/4) # uno por cada criterio y tienen que suma
 
 ## Promethee II
 
-Utilizaremos directamente el metodo Promethee 2 que nos dara una ordenacion de los datos
+Utilizaremos directamente el metodo Promethee 2 que nos dara una
+ordenacion de los datos
 
 ```{r}
 tab_Pmthe_ii=multicriterio.metodo.promethee_ii(tabdecs.X = matdecision,pesos.criterios = pesos.criterios01,tab.fpref = tab.fpref01)
@@ -251,13 +313,18 @@ qgraph(tab_Pmthe_ii$tablarelacionsupera)
 
 ```
 
-Aqui tenemos la tabla junto con el grafo de ordenacion pero para aclarar:
+Aqui tenemos la tabla junto con el grafo de ordenacion pero para
+aclarar:
+
 ```{r}
 order(tab_Pmthe_ii$vflujos.netos,decreasing = T)
 ```
-Asi segun este criterio la mejor opcion es fichar a Evenepoel, luego a Pogacar, luego a vingegaard y la ultima opcion es Roglic.
+
+Asi segun este criterio la mejor opcion es fichar a Evenepoel, luego a
+Pogacar, luego a vingegaard y la ultima opcion es Roglic.
 
 ## Promethee Windows
+
 Voy a hacer lo mismo con Promethee Windows:
 
 ```{r}
@@ -265,12 +332,16 @@ tab_Pmthe_Windows=multicriterio.metodo.promethee_windows(matdecision = matdecisi
 tab_Pmthe_Windows_2=multicriterio.metodo.promethee_windows_kableExtra(tab_Pmthe_Windows)
 tab_Pmthe_Windows_2$tabEscenario
 ```
+
 Aqui tenemos la tabla completa, y para sacar las conclusiones finales:
+
 ```{r}
 ##tab_Pmthe_Windows_2$tabAcciones
 rownames(tab_Pmthe_Windows$Acciones)
 ```
-Asi tendriamos la misma ordenacion que hemos obtenido en el apartado anterior
 
-Como conclusion, segun este metodo elegiriamos a Evenepoel como ciclista a fichar
-para nuestro equipo
+Asi tendriamos la misma ordenacion que hemos obtenido en el apartado
+anterior
+
+Como conclusion, segun este metodo elegiriamos a Evenepoel como ciclista
+a fichar para nuestro equipo
